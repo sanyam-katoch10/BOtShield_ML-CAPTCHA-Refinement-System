@@ -141,7 +141,7 @@ A lightweight **Convolutional Neural Network** trained on synthetic CAPTCHA imag
 ### 📌 Training Summary
 
 * 6,000 labeled images (easy/medium/hard)
-* 80–90% accuracy on test set
+* 95% accuracy on test set
 * Conv2D + MaxPooling layers
 * Dropout for regularization
 * Adam optimizer
