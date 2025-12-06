@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  🤖
+  <h1>🤖</h1>
 </p>
 
 <h1 align="center">ML-Enhanced CAPTCHA Refinement System</h1>
