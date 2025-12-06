@@ -1,6 +1,7 @@
 
 <h1>🤖 ML-Enhanced CAPTCHA Refinement System</h1>
 
+<img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" width="50"/>
 
 ### *AI-Powered Adaptive CAPTCHA Generator & Difficulty Classifier*
 
