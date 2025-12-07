@@ -198,6 +198,7 @@ Lightweight **CNN** for CAPTCHA difficulty classification.
 
 ### Confusion Matrix
 <p align="center">
+  <b>Confusion Matrix for CAPTCHA Difficulty Classifier</b><br>
   <img src="confusion_matrix.png" alt="Confusion Matrix" width="600"/>
 </p>
 
