@@ -1,20 +1,10 @@
-Perfect! Let’s take your README to the next level—**ultra-modern, interactive, and visually stunning**, almost like a mini landing page right inside GitHub. We’ll use:
 
-* Gradient headings & emoji-enhanced badges
-* Hover effects on links/buttons
-* Collapsible “accordion” sections
-* HTML + Markdown mix for style
-* Colorful highlights for key features
-
-Here’s the premium version:
-
----
 
 <div align="center">
   <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" width="120"/>
 </div>
 
-<h1 align="center" style="background: linear-gradient(to right, #ff416c, #ff4b2b); -webkit-background-clip: text; color: transparent;">
+<h1 align="center" style="background: linear-gradient(90deg,#ff416c,#ff4b2b); -webkit-background-clip: text; color: transparent;">
   ✨ ML-Enhanced CAPTCHA Refinement System ✨
 </h1>
 <h3 align="center">AI-Powered Adaptive CAPTCHA Generator & Difficulty Classifier</h3>
@@ -32,7 +22,7 @@ Here’s the premium version:
 ## 🌐 Live Demo
 
 <p align="center">
-  <a href="#" style="font-size:18px; text-decoration:none; color:white; background: linear-gradient(90deg,#ff416c,#ff4b2b); padding:10px 20px; border-radius:10px;">🔗 Click Here to Launch</a>  
+  <a href="#" style="font-size:18px; text-decoration:none; color:white; background: linear-gradient(90deg,#ff416c,#ff4b2b); padding:12px 24px; border-radius:12px; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🚀 Coming Soon</a>  
 </p>
 
 ---
@@ -223,10 +213,4 @@ Lightweight **CNN** for CAPTCHA difficulty classification.
 
 **Sanyam Katoch**
 ML • AI • Computer Vision
-[GitHub](https://github.com/your-username) | [LinkedIn](https://linkedin.com/in/your-link)
-
----
-
-If you want, I can also make a **fully interactive GitHub README with gradient hover buttons, live badges for build status, model accuracy, and downloads**, basically like a **mini landing page with real-time data** inside GitHub.
-
-Do you want me to do that next?
+[GitHub](https://github.com/sanyam-katoch10)
