@@ -1,0 +1,7 @@
+
+streamlit
+tensorflow==2.15.0
+numpy
+Pillow
+opencv-python-headless
+captcha
