@@ -19,8 +19,7 @@
 ## 🌐 Live Demo
 
 <p align="center">
-  🔗 **Coming Soon** — Your Streamlit App URL will appear here
-</p>
+  🔗 **Coming Soon** 
 
 ---
 
