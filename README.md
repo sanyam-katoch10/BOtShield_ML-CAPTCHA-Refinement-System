@@ -5,7 +5,7 @@
 </div>
 
 <h1 align="center" style="background: linear-gradient(90deg,#ff416c,#ff4b2b); -webkit-background-clip: text; color: transparent;">
-  ✨ ML-Enhanced CAPTCHA Refinement System ✨
+  🤖 ML-Enhanced CAPTCHA Refinement System 🔐
 </h1>
 <h3 align="center">AI-Powered Adaptive CAPTCHA Generator & Difficulty Classifier</h3>
 
@@ -196,7 +196,7 @@ Lightweight **CNN** for CAPTCHA difficulty classification.
 
 *(Add screenshot here)*
 
-### Confusion Mastrix
+### Confusion Matrix
 <p align="center">
   <img src="confusion_matrix.png" alt="Confusion Matrix" width="600"/>
 </p>
