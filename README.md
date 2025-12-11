@@ -180,7 +180,7 @@ streamlit run src/app.py
 
 ---
 
-# 📸 Screenshots (Add Your Images)
+# 📸 Screenshots
 
 | CAPTCHA Generator  | Refinement Loop    | Confusion Matrix   |
 | ------------------ | ------------------ | ------------------ | 
@@ -201,11 +201,18 @@ streamlit run src/app.py
 # 👤 **Author**
 
 <div align="center">
+  <b>Developed by</b> 
   <b>Sanyam Katoch</b>  
-  <br>Machine Learning & Computer Vision Developer  
-  <br>
+  <br>Connect with me 
+<br>
+<div align="center">
   <a href="https://github.com/sanyam-katoch10">
     <img src="https://img.shields.io/badge/GitHub-sanyam--katoch10-000?style=for-the-badge&logo=github"/>
   </a>
+  &nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/sanyam-katoch10/">
+    <img src="https://img.shields.io/badge/LinkedIn-Sanyam--Katoch-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
+  </a>
 </div>
+
 
