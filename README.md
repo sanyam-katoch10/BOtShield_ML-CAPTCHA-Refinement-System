@@ -4,22 +4,12 @@
 <p align="center">
   <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhhdjd1eXQ5N2d4aWU5MjB1Mmw0OHpiNTR2NjZybHBsc2J0djhmNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o0vwzuFwCGAFO/giphy.gif" width="70%" alt="App Demo Animation"/>
 </p>
-<p align="center">
-  <img src="https://img.shields.io/badge/Dataset_Size-6000_images-blueviolet?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Model_Accuracy-90%25-brightgreen?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Model_Size-24_MB-orange?style=for-the-badge"/>
-</p>
+
 ## 🔄 How It Works (Animated Overview)
 
 <p align="center">
   <img src="https://i.imgur.com/TsGHEeH.gif" width="80%" alt="Workflow GIF"/>
 </p>
-
-1. Generate a CAPTCHA  
-2. Predict difficulty via CNN  
-3. Adjust noise/distortion/clutter  
-4. Regenerate until target difficulty is achieved  
-5. Deliver optimized CAPTCHA  
 
 
 <div align="center">
@@ -66,6 +56,11 @@ The **ML-Enhanced CAPTCHA Refinement System** intelligently generates, classifie
 
 Designed to balance **human accessibility** with **maximum bot resistance**, this system dynamically fine-tunes CAPTCHA complexity using a CNN classifier.
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Dataset_Size-6000_images-blueviolet?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Model_Accuracy-95%25-brightgreen?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Model_Size-75_MB-orange?style=for-the-badge"/>
+</p>
 ---
 
 # ✨ **Key Capabilities**
