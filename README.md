@@ -210,7 +210,7 @@ streamlit run src/app.py
     <img src="https://img.shields.io/badge/GitHub-sanyam--katoch10-000?style=for-the-badge&logo=github"/>
   </a>
   &nbsp;&nbsp;
-  <a href="https://www.linkedin.com/in/sanyam-katoch10/">
+  <a href="https://www.linkedin.com/in/sanyam-katoch/">
     <img src="https://img.shields.io/badge/LinkedIn-Sanyam--Katoch-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
   </a>
 </div>
