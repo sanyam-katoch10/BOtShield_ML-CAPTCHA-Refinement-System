@@ -1,14 +1,6 @@
-<p align="center">
-  <img src="https://i.imgur.com/wZ3tFQO.png" width="85%" alt="ML CAPTCHA Refinement Banner"/>
-</p>
+
 <p align="center">
   <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhhdjd1eXQ5N2d4aWU5MjB1Mmw0OHpiNTR2NjZybHBsc2J0djhmNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o0vwzuFwCGAFO/giphy.gif" width="70%" alt="App Demo Animation"/>
-</p>
-
-## 🔄 How It Works (Animated Overview)
-
-<p align="center">
-  <img src="https://i.imgur.com/TsGHEeH.gif" width="80%" alt="Workflow GIF"/>
 </p>
 
 
