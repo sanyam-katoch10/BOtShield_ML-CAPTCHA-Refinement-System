@@ -61,6 +61,7 @@ Designed to balance **human accessibility** with **maximum bot resistance**, thi
   <img src="https://img.shields.io/badge/Model_Accuracy-95%25-brightgreen?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Model_Size-75_MB-orange?style=for-the-badge"/>
 </p>
+
 ---
 
 # ✨ **Key Capabilities**
