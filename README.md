@@ -184,7 +184,7 @@ streamlit run src/app.py
 
 | CAPTCHA Generator  | Refinement Loop    | Confusion Matrix   |
 | ------------------ | ------------------ | ------------------ | 
-| *(add screenshot)* | *(add screenshot)* | <p align="center"> <img src="confusion_matrix.png" width="600"/> </p> |
+|  <p align="center"> <img src="pics/gen.png" width="600"/> </p> | <p align="center"> <img src="pics/ref.png" width="600"/> </p> | <p align="center"> <img src="pics/confusion_matrix.png" width="600"/> </p> |
 
 
 ---
