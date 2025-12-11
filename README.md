@@ -1,13 +1,12 @@
 
+
 <p align="center">
   <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhhdjd1eXQ5N2d4aWU5MjB1Mmw0OHpiNTR2NjZybHBsc2J0djhmNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o0vwzuFwCGAFO/giphy.gif" width="70%" alt="App Demo Animation"/>
 </p>
 
-
 <div align="center">
   <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" width="120"/>
 </div>
-
 
 <h1 align="center">
   <span style="background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a88, #ff99ac); -webkit-background-clip: text; color: transparent;">
@@ -27,7 +26,7 @@
 
 ---
 
-# 🌐 **Live Demo**
+## 🌐 Live Demo
 
 <p align="center">
   <a href="https://sam-ml-captcha-refinement.streamlit.app/" target="_blank">
@@ -37,16 +36,16 @@
 
 ---
 
-# 🎯 **Project Overview**
+## 🎯 Project Overview
 
 The **ML-Enhanced CAPTCHA Refinement System** intelligently generates, classifies, and adjusts CAPTCHA difficulty levels using a hybrid of:
 
-✔ Computer Vision
-✔ Deep Learning
-✔ Real-time adaptive feedback
-✔ Streamlit interactive UI
+* Computer Vision
+* Deep Learning
+* Real-time adaptive feedback
+* Streamlit interactive UI
 
-Designed to balance **human accessibility** with **maximum bot resistance**, this system dynamically fine-tunes CAPTCHA complexity using a CNN classifier.
+It is designed to balance **human accessibility** with **maximum bot resistance** by dynamically fine-tuning CAPTCHA complexity using a CNN classifier.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Dataset_Size-6000_images-blueviolet?style=for-the-badge"/>
@@ -56,27 +55,37 @@ Designed to balance **human accessibility** with **maximum bot resistance**, thi
 
 ---
 
-# ✨ **Key Capabilities**
+### 📊 Classification Report
 
-### 🔐 **1. Smart CAPTCHA Generator**
+| Class  | Precision | Recall | F1-Score | Support |
+| ------ | --------- | ------ | -------- | ------- |
+| easy   | 1.00      | 1.00   | 1.00     | 2000    |
+| medium | 1.00      | 0.99   | 0.99     | 2000    |
+| hard   | 0.99      | 1.00   | 1.00     | 2000    |
+
+---
+
+## ✨ Key Capabilities
+
+### 🔐 Smart CAPTCHA Generator
 
 * Adjustable **noise**, **distortion**, **clutter**
 * Fully randomized CAPTCHA text
 * Strong visual variations for training
 
-### 🤖 **2. CNN Difficulty Classifier**
+### 🤖 CNN Difficulty Classifier
 
 * 6000 labeled images (easy/medium/hard)
 * 95% validation accuracy
-* TensorFlow + Keras lightweight CNN
+* Lightweight CNN (TensorFlow + Keras)
 
-### 🔄 **3. Adaptive Refinement Loop**
+### 🔄 Adaptive Refinement Loop
 
 * Predict → Adjust → Re-generate → Finalize
 * Ensures target difficulty is achieved
 * Ideal for **real-time security** use cases
 
-### 🎨 **4. Beautiful Streamlit Interface**
+### 🎨 Streamlit Interface
 
 * Dark mode, gradient UI, live preview
 * Adjustable sliders
@@ -84,7 +93,7 @@ Designed to balance **human accessibility** with **maximum bot resistance**, thi
 
 ---
 
-# 🧠 **System Architecture**
+## 🧠 System Architecture
 
 ```mermaid
 flowchart LR
@@ -99,7 +108,7 @@ C --> F([Optimized CAPTCHA Output])
 
 ---
 
-# 📁 **Project Structure**
+## 📁 Project Structure
 
 ```
 ML-CAPTCHA-Refinement/
@@ -120,30 +129,30 @@ ML-CAPTCHA-Refinement/
 
 ---
 
-# ⚙️ **Installation & Setup**
+## ⚙️ Installation & Setup
 
-## 🔧 Step 1 — Clone Repository
+### 🔧 Step 1 — Clone Repository
 
 ```bash
 git clone https://github.com/your-username/ML-CAPTCHA-Refinement.git
 cd ML-CAPTCHA-Refinement
 ```
 
-## 🧰 Step 2 — Create Virtual Environment
+### 🧰 Step 2 — Create Virtual Environment
 
 ```bash
 py -3.11 -m venv venv
 venv\Scripts\activate
 ```
 
-## 📦 Step 3 — Install Dependencies
+### 📦 Step 3 — Install Dependencies
 
 ```bash
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## 🚀 Step 4 — Launch App
+### 🚀 Step 4 — Launch App
 
 ```bash
 streamlit run src/app.py
@@ -151,7 +160,7 @@ streamlit run src/app.py
 
 ---
 
-# 🧪 **Machine Learning Deep Dive**
+## 🧪 Machine Learning Deep Dive
 
 ### 🖼 Dataset
 
@@ -165,11 +174,8 @@ streamlit run src/app.py
 ### 🧠 CNN Model
 
 * Conv2D → ReLU → MaxPooling
-* Conv2D → ReLU → MaxPooling
-* Dense Layer
-* Softmax classifier
-* Trained using Adam optimizer
-* Categorical Crossentropy
+* Dense Layer → Softmax classifier
+* Adam optimizer, Categorical Crossentropy
 
 ### 🔄 Refinement Algorithm
 
@@ -180,16 +186,15 @@ streamlit run src/app.py
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
 
-| CAPTCHA Generator  | Refinement Loop    | Confusion Matrix   |
-| ------------------ | ------------------ | ------------------ | 
-|  <p align="center"> <img src="pics/gen.png" width="600"/> </p> | <p align="center"> <img src="pics/ref.png" width="600"/> </p> | <p align="center"> <img src="pics/confusion_matrix.png" width="600"/> </p> |
-
+| CAPTCHA Generator                     | Refinement Loop                       | Confusion Matrix                                   |
+| ------------------------------------- | ------------------------------------- | -------------------------------------------------- |
+| <img src="pics/gen.png" width="600"/> | <img src="pics/ref.png" width="600"/> | <img src="pics/confusion_matrix.png" width="600"/> |
 
 ---
 
-# 🚀 **Future Enhancements**
+## 🚀 Future Enhancements
 
 * Audio CAPTCHA support
 * Reinforcement Learning optimization
@@ -198,27 +203,20 @@ streamlit run src/app.py
 
 ---
 
-# 👤 **Author**
+## 👤 Author
 
 <div align="center">
-  <b>Developed by</b> &nbsp;&nbsp;
-  <b>Sanyam Katoch </b>  
-  <br>Connect with me 
-<br>
-<div align="center">
+  <b>Sanyam Katoch</b>  
+  <br>Connect with me:  
+  <br><br>
   <a href="https://github.com/sanyam-katoch10" target="_blank">
     <img src="https://img.shields.io/badge/GitHub-sanyam--katoch10-000?style=for-the-badge&logo=github"/>
   </a>
-</div>
-<br>
-<div align="center">
   <a href="https://www.linkedin.com/in/sanyam-katoch/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-Sanyam--Katoch-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white"/>
   </a>
 </div>
-<br>
 
 
 
-
-
+Do you want me to do that next?
