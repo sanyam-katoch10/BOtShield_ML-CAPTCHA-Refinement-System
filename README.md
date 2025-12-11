@@ -22,7 +22,7 @@
 ## 🌐 Live Demo
 
 <p align="center">
-  <a href="#" style="font-size:18px; text-decoration:none; color:white; background: linear-gradient(90deg,#ff416c,#ff4b2b); padding:12px 24px; border-radius:12px; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🚀 Coming Soon</a>  
+  <a href="#" style="font-size:18px; text-decoration:none; color:white; background: linear-gradient(90deg,#ff416c,#ff4b2b); padding:12px 24px; border-radius:12px; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">🚀 https://sam-ml-captcha-refinement.streamlit.app/</a>  
 </p>
 
 ---
