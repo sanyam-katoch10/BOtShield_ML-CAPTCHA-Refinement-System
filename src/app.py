@@ -152,57 +152,19 @@ with col3:
     st.markdown("### 🔁 CAPTCHA Refinement")
     target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
     refine_btn = st.button("✨ Refine CAPTCHA")
-    auto = st.button("🚀 Auto-Refinement")
-
+    auto = st.button("🚀 Start Auto-Refinement")
     line_placeholder = st.empty()
     heatmap_placeholder = st.empty()
 
-    # Single refinement
     if refine_btn:
         img, text, predicted = refine(target)
         st.image(img, use_column_width=True)
-        buf = BytesIO()
-        img.save(buf, format="PNG")
-        st.download_button(
-            "⬇️ Download CAPTCHA",
-            data=buf.getvalue(),
-            file_name=f"{text}_{predicted}.png",
-            mime="image/png",
-            use_container_width=True
-        )
 
-    with col3:
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("### 🔁 CAPTCHA Refinement")
-    
-    target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
-    refine_btn = st.button("✨ Refine CAPTCHA")
-    auto = st.button("🚀 Auto-Refinement")
-
-    line_placeholder = st.empty()
-    heatmap_placeholder = st.empty()
-
-    # --- Single Refinement ---
-    if refine_btn:
-        img, text, predicted = refine(target)
-        st.image(img, use_column_width=True)
-        buf = BytesIO()
-        img.save(buf, format="PNG")
-        st.download_button(
-            "⬇️ Download CAPTCHA",
-            data=buf.getvalue(),
-            file_name=f"{text}_{predicted}.png",
-            mime="image/png",
-            use_container_width=True
-        )
-
-    # --- Auto Refinement ---
     if auto:
         grid_size = 5
         confidences = []
-
+        difficulties = np.zeros((grid_size, grid_size))
         for step in range(6):
-            difficulties = np.zeros((grid_size, grid_size))
             for i in range(grid_size):
                 for j in range(grid_size):
                     img, text, pred = refine(target)
@@ -211,32 +173,25 @@ with col3:
 
             avg_conf = difficulties.mean()
             confidences.append(avg_conf)
-
-            # Line plot
             fig_line, ax_line = plt.subplots()
-            ax_line.plot(confidences, marker='o', color="#ff6f61", linewidth=2)
+            ax_line.plot(confidences, marker='o', color="#00ffff", linewidth=2)
             ax_line.set_ylim(0, 1)
-            ax_line.set_facecolor("#1a1a1a")
-            ax_line.set_title("Average Confidence Convergence", color="#e0e0e0")
-            ax_line.set_xlabel("Iteration", color="#b0b0b0")
-            ax_line.set_ylabel("Confidence", color="#b0b0b0")
+            ax_line.set_facecolor("#0f1a25")
+            ax_line.set_title("Average Confidence Convergence", color="#e5e5e5")
+            ax_line.set_xlabel("Iteration", color="#c0c0c0")
+            ax_line.set_ylabel("Confidence", color="#c0c0c0")
+            ax_line.tick_params(colors="#c0c0c0")
             line_placeholder.pyplot(fig_line)
 
-            # Heatmap
             fig_heat, ax_heat = plt.subplots(figsize=(5,5))
-            sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="mako", ax=ax_heat)
-            ax_heat.set_title(f"Difficulty Heatmap (Step {step+1})", color="#e0e0e0")
+            sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat, cbar_kws={'color':'#e5e5e5'})
+            ax_heat.set_title(f"Difficulty Heatmap (Step {step+1})", color="#e5e5e5")
+            ax_heat.tick_params(colors="#c0c0c0")
             heatmap_placeholder.pyplot(fig_heat)
 
             time.sleep(0.7)
-
         st.success("Target difficulty stabilized ✅")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-
-
-# -----------------------------
-# Footer
-# -----------------------------
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
