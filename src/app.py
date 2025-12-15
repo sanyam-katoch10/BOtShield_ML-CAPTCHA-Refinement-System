@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import time
-import random
 
 st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔐", layout="wide")
 
@@ -33,12 +32,36 @@ st.markdown("""
     border: 1px solid rgba(255,255,255,0.12);
     box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
-.hero-title { font-size:50px; font-weight:800; text-align:center; color:#e5e5e5; }
+.hero-title { font-size:50px; font-weight:800; text-align:center; color:#e5e5e5; position:relative; }
 .hero-sub { text-align:center; color:#c0c0c0; margin-bottom:40px; font-size:18px; }
 .stButton button { background: linear-gradient(135deg,#1f1c2c,#928dab); border-radius:14px; font-weight:600; border:none; color:#fff; }
+.banner {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.banner div {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    animation: move 8s linear infinite;
+}
+.banner div:nth-child(1) { left: 10%; animation-delay: 0s; }
+.banner div:nth-child(2) { left: 50%; animation-delay: 2s; }
+.banner div:nth-child(3) { left: 80%; animation-delay: 4s; }
+@keyframes move {
+    0% { transform: translateY(0) scale(1); opacity:0.3; }
+    50% { transform: translateY(-40px) scale(1.2); opacity:0.6; }
+    100% { transform: translateY(0) scale(1); opacity:0.3; }
+}
 </style>
 """, unsafe_allow_html=True)
 
+st.markdown('<div class="banner"><div></div><div></div><div></div></div>', unsafe_allow_html=True)
 st.markdown('<h1 class="hero-title">🔐 ML CAPTCHA Refinement</h1>', unsafe_allow_html=True)
 st.markdown('<div class="hero-sub">Self-optimizing CAPTCHA system with real-time ML feedback</div>', unsafe_allow_html=True)
 
@@ -69,10 +92,10 @@ with col3:
     target = st.selectbox("Target Difficulty",["easy","medium","hard"])
     refine_btn = st.button("✨ Refine CAPTCHA")
     start_refinement = st.button("🚀 Start Auto-Refinement")
+
     chart_col1, chart_col2 = st.columns(2)
     line_placeholder = chart_col1.empty()
     heatmap_placeholder = chart_col2.empty()
-
 
     if refine_btn:
         img,text,predicted = refine(target)
@@ -88,35 +111,30 @@ with col3:
         for step in range(6):
             for i in range(grid_size):
                 for j in range(grid_size):
-                    img,text,predicted = refine(target)
-                    _,conf = predict(img)
+                    img, text, predicted = refine(target)
+                    _, conf = predict(img)
                     difficulties[i,j] = conf
 
-            avg_conf = difficulties.mean()
-            confidences.append(avg_conf)
+            confidences.append(difficulties.mean())
 
-            fig_line, ax_line = plt.subplots()
+            fig_line, ax_line = plt.subplots(figsize=(7, 5))
             ax_line.plot(confidences, marker='o', color="green", linewidth=2)
             ax_line.set_ylim(0, 1)
-
             ax_line.set_facecolor("white")
             fig_line.patch.set_facecolor("white")
-
             ax_line.set_title("Average Confidence Convergence", color="black")
             ax_line.set_xlabel("Iteration", color="black")
             ax_line.set_ylabel("Confidence", color="black")
             ax_line.tick_params(colors="black")
-
             line_placeholder.pyplot(fig_line, clear_figure=True)
             plt.close(fig_line)
 
-
-            fig_heat,ax_heat = plt.subplots(figsize=(5,5))
-            hm = sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat)
+            fig_heat, ax_heat = plt.subplots(figsize=(7, 5))
+            hm = sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat, square=True)
             cbar = hm.collections[0].colorbar
-            cbar.ax.tick_params(color="#e5e5e5", labelcolor="#e5e5e5")
-            ax_heat.set_title(f"Difficulty Heatmap (Step {step+1})", color="#e5e5e5")
-            ax_heat.tick_params(colors="#d1d5db")
+            cbar.ax.tick_params(color="black", labelcolor="black")
+            ax_heat.tick_params(colors="black")
+            fig_heat.patch.set_facecolor("white")
             heatmap_placeholder.pyplot(fig_heat, clear_figure=True)
             plt.close(fig_heat)
 
@@ -126,8 +144,3 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
-
-
-
-
-
