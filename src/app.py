@@ -113,7 +113,6 @@ with col3:
     refine_btn = st.button("✨ Refine CAPTCHA")
     auto = st.button("🚀 Start Auto-Refinement")
 
-    # placeholders for live updates
     line_placeholder = st.empty()
     heatmap_placeholder = st.empty()
 
@@ -130,7 +129,6 @@ with col3:
         difficulties = np.zeros((grid_size, grid_size))
         
         for step in range(6):
-            
             for i in range(grid_size):
                 for j in range(grid_size):
                     img, text, pred = refine(target)
@@ -139,6 +137,7 @@ with col3:
         
             avg_conf = difficulties.mean()
             confidences.append(avg_conf)
+
             fig_line, ax_line = plt.subplots()
             ax_line.plot(confidences, marker='o', color="#ff6f61")
             ax_line.set_ylim(0, 1)
@@ -154,8 +153,10 @@ with col3:
             heatmap_placeholder.pyplot(fig_heat)
 
             time.sleep(0.7)
+
         st.success("Target difficulty stabilized ✅")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Dark ML Visualization Dashboard ✨</center>", unsafe_allow_html=True)
+
+st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
