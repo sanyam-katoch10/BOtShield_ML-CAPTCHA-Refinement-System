@@ -1,8 +1,9 @@
 
 
 <p align="center">
-  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWhhdjd1eXQ5N2d4aWU5MjB1Mmw0OHpiNTR2NjZybHBsc2J0djhmNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/o0vwzuFwCGAFO/giphy.gif" width="70%" alt="App Demo Animation"/>
+  <img src="assets/demo.gif" width="70%" alt="ML CAPTCHA Refinement Demo"/>
 </p>
+
 
 <div align="center">
   <img 
