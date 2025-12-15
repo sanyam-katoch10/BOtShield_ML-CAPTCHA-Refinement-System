@@ -69,8 +69,10 @@ with col3:
     target = st.selectbox("Target Difficulty",["easy","medium","hard"])
     refine_btn = st.button("✨ Refine CAPTCHA")
     start_refinement = st.button("🚀 Start Auto-Refinement")
-    line_placeholder = st.empty()
-    heatmap_placeholder = st.empty()
+    chart_col1, chart_col2 = st.columns(2)
+    line_placeholder = chart_col1.empty()
+    heatmap_placeholder = chart_col2.empty()
+
 
     if refine_btn:
         img,text,predicted = refine(target)
@@ -124,6 +126,7 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
+
 
 
 
