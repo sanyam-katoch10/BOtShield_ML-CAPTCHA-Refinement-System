@@ -1,8 +1,10 @@
 import streamlit as st
+import matplotlib.pyplot as plt
 from io import BytesIO
 from generator import generate_captcha
 from refine_m import refine, predict
-
+import time
+import random
 
 st.set_page_config(
     page_title="ML CAPTCHA Refinement",
@@ -10,81 +12,93 @@ st.set_page_config(
     layout="wide"
 )
 
-
 st.markdown("""
 <style>
 
-/* Background */
+/* ===== Animated Gradient Background ===== */
 .stApp {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1cb5e0);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     color: white;
 }
 
-/* Remove default padding */
-.block-container {
-    padding-top: 2rem;
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Glass card */
+/* ===== Floating Particles ===== */
+.particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+    z-index: 0;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
+}
+
+/* ===== Glassmorphism ===== */
 .glass {
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
     border-radius: 20px;
     padding: 25px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
     border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
-/* Title */
+/* ===== Title ===== */
 .hero-title {
-    font-size: 48px;
+    font-size: 50px;
     font-weight: 800;
     text-align: center;
-    margin-bottom: 10px;
 }
 
 .hero-sub {
     text-align: center;
-    font-size: 18px;
     color: #d1d5db;
     margin-bottom: 40px;
+    font-size: 18px;
 }
 
 /* Buttons */
 .stButton button {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    border-radius: 12px;
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    border-radius: 14px;
     font-weight: 600;
     border: none;
-}
-
-.stButton button:hover {
-    transform: scale(1.03);
-}
-
-/* Sliders */
-.stSlider label {
-    font-weight: 600;
-    color: #e5e7eb;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
+
+for _ in range(25):
+    left = random.randint(0, 100)
+    delay = random.randint(0, 20)
+    st.markdown(
+        f"<div class='particle' style='left:{left}%; animation-delay:{delay}s'></div>",
+        unsafe_allow_html=True
+    )
+
 st.markdown('<div class="hero-title">🔐 ML CAPTCHA Refinement</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="hero-sub">AI-powered CAPTCHA generation with adaptive difficulty optimization</div>',
+    '<div class="hero-sub">Self-optimizing CAPTCHA system with real-time ML feedback</div>',
     unsafe_allow_html=True
 )
 
 
-left, center, right = st.columns([1.1, 1.6, 1.1])
+col1, col2, col3 = st.columns([1.2, 1.8, 1.4])
 
-
-with left:
+with col1:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown("### ⚙️ Manual Controls")
 
@@ -92,15 +106,15 @@ with left:
     dist = st.slider("Distortion", 0.0, 1.0, 0.2)
     clutter = st.slider("Clutter", 0.0, 1.0, 0.2)
 
-    gen_btn = st.button("🎲 Generate CAPTCHA", use_container_width=True)
+    gen = st.button("🎲 Generate CAPTCHA", use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 
-with center:
+with col2:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown("### 🖼️ CAPTCHA Preview")
 
-    if gen_btn:
+    if gen:
         img, text = generate_captcha(noise, dist, clutter)
         st.image(img, use_column_width=True)
         pred, conf = predict(img)
@@ -112,39 +126,40 @@ with center:
             **Confidence:** `{conf:.2f}`
             """
         )
-
     st.markdown('</div>', unsafe_allow_html=True)
 
-
-with right:
+with col3:
     st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.markdown("### 🎯 AI Refinement")
+    st.markdown("### 🔁 Auto-Refinement Loop")
 
-    target = st.selectbox(
-        "Target Difficulty",
-        ["easy", "medium", "hard"]
-    )
+    target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
+    auto = st.button("🚀 Start Auto-Refinement")
 
-    refine_btn = st.button("✨ Refine CAPTCHA", use_container_width=True)
+    chart_placeholder = st.empty()
 
-    if refine_btn:
-        img, text, predicted = refine(target)
-        st.image(img, use_column_width=True)
+    if auto:
+        confidences = []
 
-        buf = BytesIO()
-        img.save(buf, format="PNG")
+        for step in range(6):
+            img, text, pred = refine(target)
+            _, conf = predict(img)
+            confidences.append(conf)
 
-        st.download_button(
-            "⬇️ Download",
-            data=buf.getvalue(),
-            file_name=f"{text}_{predicted}.png",
-            mime="image/png",
-            use_container_width=True
-        )
+            fig, ax = plt.subplots()
+            ax.plot(confidences, marker='o')
+            ax.set_ylim(0, 1)
+            ax.set_title("Confidence Convergence")
+            ax.set_xlabel("Iteration")
+            ax.set_ylabel("Confidence")
+
+            chart_placeholder.pyplot(fig)
+            time.sleep(0.7)
+
+        st.success("Target difficulty stabilized ✅")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown(
-    "<center style='color:#9ca3af;margin-top:40px;'>Built with ❤️ using Streamlit & Deep Learning</center>",
+    "<center style='margin-top:40px;color:#9ca3af;'>✨ Made by Sanyam Katoch ✨</center>",
     unsafe_allow_html=True
 )
