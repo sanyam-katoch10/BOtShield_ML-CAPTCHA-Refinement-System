@@ -13,8 +13,8 @@ st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔐", layout=
 st.markdown("""
 <style>
 .stApp {
-    background: linear-gradient(270deg, #ff6ec4, #7873f5, #4ade80, #facc15);
-    background-size: 800% 800%;
+    background: linear-gradient(270deg, #4facfe, #00f2fe, #3a7bd5);
+    background-size: 600% 600%;
     animation: animatedGradient 20s ease infinite;
     color: white;
 }
@@ -63,13 +63,14 @@ st.markdown("""
     font-size: 18px;
 }
 .stButton button {
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
     border-radius: 14px;
     font-weight: 600;
     border: none;
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 for _ in range(25):
     left = random.randint(0, 100)
