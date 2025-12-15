@@ -127,7 +127,7 @@ with col3:
     confidences = []
     difficulties = np.zeros((grid_size, grid_size))
 
-    
+    # Initialize empty figures for live update
     fig_line, ax_line = plt.subplots(figsize=(7,5))
     ax_line.set_ylim(0,1)
     ax_line.set_facecolor("white")
@@ -152,12 +152,12 @@ with col3:
         avg_conf = difficulties.mean()
         confidences.append(avg_conf)
 
-        
+        # Update convergence line smoothly
         line_plot.set_data(range(len(confidences)), confidences)
         ax_line.set_xlim(0, max(5,len(confidences)))
         line_placeholder.pyplot(fig_line, clear_figure=True)
 
-        
+        # Update heatmap
         ax_heat.clear()
         hm = sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", square=True, ax=ax_heat)
         cbar = hm.collections[0].colorbar
@@ -170,5 +170,4 @@ with col3:
 
     st.success("Target difficulty stabilized ✅")
 
-
-st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Dark ML Visualization Dashboard ✨</center>", unsafe_allow_html=True)      dont chnage anything just apply new things       dotn change css for now just make other changes we did
+st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
