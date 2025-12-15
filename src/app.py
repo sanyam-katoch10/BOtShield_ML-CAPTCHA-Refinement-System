@@ -105,7 +105,9 @@ with col3:
             plt.close(fig_line)
 
             fig_heat,ax_heat = plt.subplots(figsize=(5,5))
-            sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat, cbar_kws={'color':'#e5e5e5'})
+            hm = sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat)
+            cbar = hm.collections[0].colorbar
+            cbar.ax.tick_params(color="#e5e5e5", labelcolor="#e5e5e5")
             ax_heat.set_title(f"Difficulty Heatmap (Step {step+1})", color="#e5e5e5")
             ax_heat.tick_params(colors="#c0c0c0")
             heatmap_placeholder.pyplot(fig_heat, clear_figure=True)
@@ -117,3 +119,4 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
+
