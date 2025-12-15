@@ -10,7 +10,6 @@ import random
 
 st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔐", layout="wide")
 
-
 st.markdown("""
 <style>
 .stApp {
@@ -76,8 +75,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-particle_colors = ["#4facfe", "#00f2fe", "#3a7bd5"]  
+particle_colors = ["#4facfe", "#00f2fe", "#3a7bd5"]
 for _ in range(25):
     left = random.randint(0, 100)
     delay = random.randint(0, 20)
@@ -86,7 +84,6 @@ for _ in range(25):
 
 st.markdown('<h1 class="hero-title">🔐 ML CAPTCHA Refinement</h1>', unsafe_allow_html=True)
 st.markdown('<div class="hero-sub">Self-optimizing CAPTCHA system with real-time ML feedback</div>', unsafe_allow_html=True)
-
 
 col1, col2, col3 = st.columns([1.2, 1.8, 1.4])
 
@@ -115,8 +112,6 @@ with col3:
     target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
     refine_btn = st.button("✨ Refine CAPTCHA")
     auto = st.button("🚀 Start Auto-Refinement")
-
-
     line_placeholder = st.empty()
     heatmap_placeholder = st.empty()
 
@@ -131,22 +126,19 @@ with col3:
         grid_size = 5
         confidences = []
         difficulties = np.zeros((grid_size, grid_size))
-        
         for step in range(6):
-            
             for i in range(grid_size):
                 for j in range(grid_size):
                     img, text, pred = refine(target)
                     _, conf = predict(img)
                     difficulties[i, j] = conf
-            
-    
+
             avg_conf = difficulties.mean()
             confidences.append(avg_conf)
             fig_line, ax_line = plt.subplots()
-            ax_line.plot(confidences, marker='o', color="#00ffff", linewidth=2)  
+            ax_line.plot(confidences, marker='o', color="#00ffff", linewidth=2)
             ax_line.set_ylim(0, 1)
-            ax_line.set_facecolor("#0f1a25")  
+            ax_line.set_facecolor("#0f1a25")
             ax_line.set_title("Average Confidence Convergence", color="#e5e5e5")
             ax_line.set_xlabel("Iteration", color="#c0c0c0")
             ax_line.set_ylabel("Confidence", color="#c0c0c0")
@@ -154,8 +146,7 @@ with col3:
             line_placeholder.pyplot(fig_line)
 
             fig_heat, ax_heat = plt.subplots(figsize=(5,5))
-            sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat,
-                        cbar_kws={'color':'#e5e5e5'})
+            sns.heatmap(difficulties, annot=True, fmt=".2f", cmap="coolwarm", ax=ax_heat, cbar_kws={'color':'#e5e5e5'})
             ax_heat.set_title(f"Difficulty Heatmap (Step {step+1})", color="#e5e5e5")
             ax_heat.tick_params(colors="#c0c0c0")
             heatmap_placeholder.pyplot(fig_heat)
@@ -164,6 +155,5 @@ with col3:
         st.success("Target difficulty stabilized ✅")
 
     st.markdown('</div>', unsafe_allow_html=True)
-
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Dark ML Visualization Dashboard ✨</center>", unsafe_allow_html=True)
