@@ -137,10 +137,10 @@ with col3:
         ax_line.set_ylabel("Confidence", color="black")
         ax_line.tick_params(colors="black")
         line_plot, = ax_line.plot([], [], marker='o', color='green', linewidth=2)
-        line_placeholder.pyplot(fig_line, clear_figure=True)
+        line_placeholder.pyplot(fig_line)
     
         fig_heat, ax_heat = plt.subplots(figsize=(7,5))
-        heatmap_placeholder.pyplot(fig_heat, clear_figure=True)
+        heatmap_placeholder.pyplot(fig_heat)
     
         for step in range(6):
             for i in range(grid_size):
@@ -174,5 +174,6 @@ with col3:
         st.success("Target difficulty stabilized ✅")
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
+
 
 
