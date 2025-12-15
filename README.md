@@ -5,8 +5,12 @@
 </p>
 
 <div align="center">
-  <img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png" width="120"/>
+  <img 
+    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAYAAAB/HS...CYnHME8ATwJTyTRp47/YkpCOZV03eQcCILVcA5MPHu9XHAMYsGq99J0q+X..."
+    width="120"
+  />
 </div>
+
 
 <h1 align="center">
   <span style="background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a88, #ff99ac); -webkit-background-clip: text; color: transparent;">
