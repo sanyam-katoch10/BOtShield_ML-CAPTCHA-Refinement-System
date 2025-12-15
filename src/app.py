@@ -17,6 +17,7 @@ st.markdown("""
     animation: gradientFlow 25s ease infinite;
     color: #e5e5e5;
 }
+
 @keyframes gradientFlow {
     0% { background-position: 0% 0%; }
     25% { background-position: 50% 50%; }
@@ -24,6 +25,35 @@ st.markdown("""
     75% { background-position: 50% 50%; }
     100% { background-position: 0% 0%; }
 }
+
+.block-container {
+    padding-top: 0rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.particle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    animation: float 20s infinite linear;
+    z-index: 0;
+    box-shadow: 0 0 12px rgba(255,255,255,0.25);
+    opacity: 0.7;
+}
+
+.particle:nth-child(2) { width: 8px; height: 8px; animation-duration: 25s; }
+.particle:nth-child(3) { width: 5px; height: 5px; animation-duration: 15s; }
+.particle:nth-child(4) { width: 10px; height: 10px; animation-duration: 30s; }
+
+@keyframes float {
+    0% { transform: translateY(100vh) translateX(0) scale(0.8); opacity:0.5; }
+    50% { transform: translateY(50vh) translateX(20px) scale(1.1); opacity:1; }
+    100% { transform: translateY(-10vh) translateX(-10px) scale(0.9); opacity:0.5; }
+}
+
 .glass {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(18px);
@@ -32,34 +62,59 @@ st.markdown("""
     border: 1px solid rgba(255,255,255,0.12);
     box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 }
-.hero-title { font-size:50px; font-weight:800; text-align:center; color:#e5e5e5; position:relative; }
-.hero-sub { text-align:center; color:#c0c0c0; margin-bottom:40px; font-size:18px; }
-.stButton button { background: linear-gradient(135deg,#1f1c2c,#928dab); border-radius:14px; font-weight:600; border:none; color:#fff; }
-.banner {
+
+.hero-title {
+    font-size: 50px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 0px;
+    color: #e5e5e5;
     position: relative;
-    width: 100%;
-    height: 80px;
-    overflow: hidden;
-    margin-bottom: 20px;
 }
-.banner div {
+
+.hero-title::after {
+    content: '';
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background: rgba(255,255,255,0.05);
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent);
+    transform: translate(-50%, -50%) scale(1);
     border-radius: 50%;
-    animation: move 8s linear infinite;
+    animation: pulse 3s infinite ease-in-out;
+    z-index: -1;
 }
-.banner div:nth-child(1) { left: 10%; animation-delay: 0s; }
-.banner div:nth-child(2) { left: 50%; animation-delay: 2s; }
-.banner div:nth-child(3) { left: 80%; animation-delay: 4s; }
-@keyframes move {
-    0% { transform: translateY(0) scale(1); opacity:0.3; }
-    50% { transform: translateY(-40px) scale(1.2); opacity:0.6; }
-    100% { transform: translateY(0) scale(1); opacity:0.3; }
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity:0.4; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity:0.7; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity:0.4; }
+}
+
+.hero-sub {
+    text-align: center;
+    color: #c0c0c0;
+    margin-bottom: 40px;
+    font-size: 18px;
+}
+
+.stButton button {
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    border-radius: 14px;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.stButton button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 st.markdown('<div class="banner"><div></div><div></div><div></div></div>', unsafe_allow_html=True)
 st.markdown('<h1 class="hero-title">🔐 ML CAPTCHA Refinement</h1>', unsafe_allow_html=True)
@@ -144,3 +199,4 @@ with col3:
     st.markdown('</div>', unsafe_allow_html=True)
 
 st.markdown("<center style='margin-top:40px;color:#9ca3af;'>✨ Made by SANYAM KATOCH ✨</center>", unsafe_allow_html=True)
+
