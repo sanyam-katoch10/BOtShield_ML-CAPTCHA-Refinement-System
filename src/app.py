@@ -10,6 +10,10 @@ import time
 # ===================== CONFIG =====================
 st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔒", layout="wide")
 
+# ===================== SESSION STATE =====================
+if "conf_list" not in st.session_state:
+    st.session_state.conf_list = []
+
 # ===================== CSS =====================
 st.markdown("""
 <style>
@@ -110,14 +114,14 @@ with st.sidebar:
 # ===================== DASHBOARD =====================
 if page == "📊 Dashboard":
     st.markdown("## 📊 System Overview")
+    avg_conf = np.mean(st.session_state.conf_list) if st.session_state.conf_list else 0.0
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("<div class='card'>### Avg Confidence<br><h2>0.76</h2></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='card'>### Avg Confidence<br><h2>{avg_conf:.2f}</h2></div>", unsafe_allow_html=True)
     with col2:
         st.markdown("<div class='card'>### Stability Status<br><h2>Stable</h2></div>", unsafe_allow_html=True)
     with col3:
         st.markdown("<div class='card'>### Active Model<br><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
-
 
 # ===================== CAPTCHA GENERATOR =====================
 elif page == "🖼 CAPTCHA Generator":
@@ -133,10 +137,14 @@ elif page == "🖼 CAPTCHA Generator":
     with col2:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         preview_slot = st.empty()
+        avg_conf_slot = st.empty()  # Live avg confidence display
         if gen_btn:
             img, text = generate_captcha(noise, distortion, clutter)
             preview_slot.image(img, use_column_width=True)
             pred, conf = predict(img)
+            st.session_state.conf_list.append(conf)
+            avg_conf = np.mean(st.session_state.conf_list)
+            avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
             st.markdown(f"**Text:** `{text}`  |  **Difficulty:** `{pred.upper()}`  |  **Confidence:** `{conf:.2f}`")
         st.markdown("</div>", unsafe_allow_html=True)
 
@@ -148,6 +156,7 @@ elif page == "🔁 Refinement Engine":
     auto_btn = st.button("🚀 Auto-Refine")
 
     live_slot = st.empty()       # live CAPTCHA preview
+    avg_conf_slot = st.empty()   # live avg confidence
     col1, col2 = st.columns([1,1])  # side-by-side plots
     conv_slot = col1.empty()     # convergence line
     heat_slot = col2.empty()     # animated heatmap
@@ -155,6 +164,10 @@ elif page == "🔁 Refinement Engine":
     if refine_btn:
         img, text, lvl = refine(target)
         live_slot.image(img, use_column_width=True)
+        _, c = predict(img)
+        st.session_state.conf_list.append(c)
+        avg_conf = np.mean(st.session_state.conf_list)
+        avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
         buf = BytesIO()
         img.save(buf, format="PNG")
         st.download_button("⬇ Download CAPTCHA", buf.getvalue(), f"{text}_{lvl}.png")
@@ -163,10 +176,10 @@ elif page == "🔁 Refinement Engine":
         confs = []
         grid = 4
         mat_current = np.zeros((grid, grid))
-        steps_per_update = 20  # higher for smoother animation
+        steps_per_update = 20
         norm = mcolors.Normalize(vmin=0, vmax=1)
         cmap = plt.cm.plasma
-    
+
         for step in range(6):
             mat_target = np.zeros((grid, grid))
             for i in range(grid):
@@ -174,14 +187,16 @@ elif page == "🔁 Refinement Engine":
                     img, _, _ = refine(target)
                     live_slot.image(img, use_column_width=True)
                     _, c = predict(img)
+                    st.session_state.conf_list.append(c)
+                    avg_conf = np.mean(st.session_state.conf_list)
+                    avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
                     mat_target[i, j] = c
-    
+
             confs.append(mat_target.mean())
-    
-            # Smooth interpolation frame by frame
+
             for t in range(1, steps_per_update + 1):
                 mat_interpolated = mat_current + (mat_target - mat_current) * (t / steps_per_update)
-    
+
                 # Convergence line
                 fig1, ax1 = plt.subplots()
                 ax1.plot(confs, marker='o', color='#00ffff')
@@ -190,7 +205,7 @@ elif page == "🔁 Refinement Engine":
                 ax1.grid(True, alpha=0.3)
                 conv_slot.pyplot(fig1, clear_figure=True)
                 plt.close(fig1)
-    
+
                 # Animated heatmap
                 fig2, ax2 = plt.subplots()
                 im = ax2.imshow(mat_interpolated, cmap=cmap, norm=norm)
@@ -204,15 +219,11 @@ elif page == "🔁 Refinement Engine":
                 ax2.set_title("Heatmap", color="#00ffff")
                 heat_slot.pyplot(fig2, clear_figure=True)
                 plt.close(fig2)
-                time.sleep(0.05)  # faster refresh for smoother motion
-    
+                time.sleep(0.05)
+
             mat_current = mat_target.copy()
 
         st.success("Target difficulty stabilized ✔")
 
-
 # ===================== FOOTER =====================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
-
-
-
