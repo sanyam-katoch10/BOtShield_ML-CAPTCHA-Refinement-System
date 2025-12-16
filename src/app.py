@@ -116,7 +116,6 @@ if page == "📊 Dashboard":
         st.markdown("<div class='card'>### Stability Status<br><h2>Stable</h2></div>", unsafe_allow_html=True)
     with col3:
         st.markdown("<div class='card'>### Active Model<br><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
-    st.markdown("<div class='card'>### 📈 Refinement Trend</div>", unsafe_allow_html=True)
 
 # ===================== CAPTCHA GENERATOR =====================
 elif page == "🖼 CAPTCHA Generator":
@@ -210,3 +209,4 @@ elif page == "🔁 Refinement Engine":
 
 # ===================== FOOTER =====================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
+
