@@ -17,7 +17,7 @@ st.set_page_config(
 # ================= CSS =================
 st.markdown("""
 <style>
-/* ===== SHINY DARK ANIMATED BACKGROUND ===== */
+/* ===== ANIMATED DARK GRADIENT BACKGROUND ===== */
 .stApp {
     background: linear-gradient(45deg, #0c0d12, #10121c, #0e0f15, #14151d);
     background-size: 400% 400%;
@@ -34,7 +34,7 @@ st.markdown("""
 }
 
 /* ===== GLASS CARDS ===== */
-.card, .plot-card, .slider-card {
+.card {
     background: rgba(30,30,38,0.55);
     backdrop-filter: blur(20px) saturate(180%);
     border-radius: 22px;
@@ -44,15 +44,30 @@ st.markdown("""
     transition: all 0.35s ease;
 }
 
-.card:hover, .plot-card:hover, .slider-card:hover {
+.card:hover {
     transform: translateY(-4px);
     box-shadow: 0 28px 60px rgba(0,0,0,0.95), 0 0 22px rgba(255,255,255,0.15);
+}
+
+/* ===== PLOTS ===== */
+.plot-card {
+    background: rgba(20,20,28,0.55);
+    backdrop-filter: blur(16px);
+    border-radius: 18px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+    transition: all 0.35s ease;
+}
+
+.plot-card:hover {
+    filter: drop-shadow(0 0 16px rgba(0,200,255,0.6));
 }
 
 /* ===== BUTTONS ===== */
 .stButton button {
     border-radius: 18px;
-    padding: 14px 22px;
+    padding: 12px 22px;
     font-weight: 700;
     color: #fff;
     background: linear-gradient(135deg,#2f323c,#8a8f9a,#2f323c);
@@ -62,7 +77,7 @@ st.markdown("""
 
 .stButton button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 28px rgba(0,200,255,0.8), 0 18px 40px rgba(0,0,0,0.95);
+    box-shadow: 0 0 32px rgba(0,200,255,0.8), 0 18px 40px rgba(0,0,0,0.95);
 }
 
 /* ===== SLIDERS ===== */
@@ -75,7 +90,7 @@ st.markdown("""
 }
 
 .stSlider:hover > div {
-    box-shadow: 0 0 16px rgba(0,200,255,0.4);
+    box-shadow: 0 0 18px rgba(0,200,255,0.4);
 }
 
 /* ===== TOPBAR ===== */
@@ -87,12 +102,6 @@ st.markdown("""
     font-weight: 800;
     margin-bottom: 20px;
     box-shadow: inset 0 1px 1px rgba(255,255,255,0.08), 0 18px 45px rgba(0,0,0,0.9);
-}
-
-/* ===== SIDEBAR ===== */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg,#0d0f15,#171a23);
-    border-right: 1px solid rgba(255,255,255,0.06);
 }
 
 /* ===== FOOTER ===== */
@@ -110,90 +119,93 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ================= MAIN LAYOUT =================
-st.markdown("## 🖥 Generator + Refinement Engine Dashboard")
+# ================= MAIN PANEL =================
+st.markdown("<div class='card'>", unsafe_allow_html=True)
+st.markdown("## 🎯 CAPTCHA + Refinement Live Preview")
 
-gen_col, refine_col = st.columns([1.2, 1.8])
+# Split layout: left for controls, right for live preview
+controls_col, live_col = st.columns([1,2])
 
-# ================= GENERATOR PANEL =================
-with gen_col:
-    st.markdown("<div class='card'><h3>CAPTCHA Generator</h3></div>", unsafe_allow_html=True)
-
+# ================= CONTROLS =================
+with controls_col:
     st.markdown("<div class='slider-card'>", unsafe_allow_html=True)
     noise = st.slider("Noise", 0.0, 1.0, 0.25)
     distortion = st.slider("Distortion", 0.0, 1.0, 0.25)
     clutter = st.slider("Clutter", 0.0, 1.0, 0.25)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    gen_btn = st.button("🎲 Generate CAPTCHA")
-    img_slot = st.empty()
-    stats_slot = st.empty()
-
-    if gen_btn:
-        img, text = generate_captcha(noise, distortion, clutter)
-        pred, conf = predict(img)
-        img_slot.image(img, use_column_width=True)
-        stats_slot.markdown(f"""
-        **Text:** `{text}`  
-        **Difficulty:** `{pred.upper()}`  
-        **Confidence:** `{conf:.2f}`
-        """)
-
-# ================= REFINEMENT PANEL =================
-with refine_col:
-    st.markdown("<div class='card'><h3>Refinement Engine</h3></div>", unsafe_allow_html=True)
     target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
+    gen_btn = st.button("🎲 Generate CAPTCHA")
     refine_btn = st.button("✨ Refine Once", key="refine")
     auto_btn = st.button("🚀 Auto-Refine", key="auto")
 
+# ================= LIVE PREVIEW =================
+with live_col:
     img_slot = st.empty()
     plot_convergence = st.empty()
     plot_heatmap = st.empty()
+    stats_slot = st.empty()
 
-    if refine_btn:
-        img, text, lvl = refine(target)
+# ================= LOGIC =================
+if gen_btn:
+    img, text = generate_captcha(noise, distortion, clutter)
+    pred, conf = predict(img)
+    img_slot.image(img, use_column_width=True)
+    stats_slot.markdown(f"""
+    **Text:** `{text}`  
+    **Difficulty:** `{pred.upper()}`  
+    **Confidence:** `{conf:.2f}`
+    """)
+
+if refine_btn:
+    img, text, lvl = refine(target)
+    img_slot.image(img, use_column_width=True)
+    buf = BytesIO()
+    img.save(buf, format="PNG")
+    st.download_button("⬇ Download CAPTCHA", buf.getvalue(), f"{text}_{lvl}.png")
+
+if auto_btn:
+    confs = []
+    for step in range(6):
+        mat = np.zeros((4,4))
+        for i in range(4):
+            for j in range(4):
+                img, _, _ = refine(target)
+                _, c = predict(img)
+                mat[i,j] = c
+        confs.append(mat.mean())
+
+        # Convergence plot
+        with plot_convergence:
+            st.markdown("<div class='plot-card'>", unsafe_allow_html=True)
+            fig1, ax1 = plt.subplots(figsize=(5,3))
+            color = f"#00{np.random.randint(150,255):02x}ff"
+            ax1.plot(confs, marker='o', color=color, linewidth=2)
+            ax1.set_ylim(0,1)
+            ax1.set_title("Confidence Convergence", color='#e0e0e0')
+            st.pyplot(fig1)
+            plt.close(fig1)
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # Heatmap plot
+        with plot_heatmap:
+            st.markdown("<div class='plot-card'>", unsafe_allow_html=True)
+            glow_mat = mat + np.random.uniform(0,0.05,mat.shape)
+            fig2, ax2 = plt.subplots(figsize=(5,3))
+            sns.heatmap(glow_mat, annot=True, fmt=".2f", cmap="coolwarm", ax=ax2)
+            ax2.set_title("Confidence Heatmap", color='#e0e0e0')
+            st.pyplot(fig2)
+            plt.close(fig2)
+            st.markdown("</div>", unsafe_allow_html=True)
+
+        # Update live CAPTCHA
         img_slot.image(img, use_column_width=True)
-        buf = BytesIO()
-        img.save(buf, format="PNG")
-        st.download_button("⬇ Download CAPTCHA", buf.getvalue(), f"{text}_{lvl}.png")
 
-    if auto_btn:
-        confs = []
-        for step in range(6):
-            mat = np.zeros((4,4))
-            for i in range(4):
-                for j in range(4):
-                    img, _, _ = refine(target)
-                    _, c = predict(img)
-                    mat[i,j] = c
-            confs.append(mat.mean())
+        time.sleep(0.5)
 
-            # Convergence plot
-            with plot_convergence:
-                st.markdown("<div class='plot-card'>", unsafe_allow_html=True)
-                fig1, ax1 = plt.subplots(figsize=(5,3))
-                color = f"#00{np.random.randint(150,255):02x}ff"
-                ax1.plot(confs, marker='o', color=color, linewidth=2)
-                ax1.set_ylim(0,1)
-                ax1.set_title("Confidence Convergence", color='#e0e0e0')
-                st.pyplot(fig1)
-                plt.close(fig1)
-                st.markdown("</div>", unsafe_allow_html=True)
+    st.success("Target difficulty stabilized ✔")
 
-            # Heatmap plot
-            with plot_heatmap:
-                st.markdown("<div class='plot-card'>", unsafe_allow_html=True)
-                glow_mat = mat + np.random.uniform(0,0.05,mat.shape)
-                fig2, ax2 = plt.subplots(figsize=(5,3))
-                sns.heatmap(glow_mat, annot=True, fmt=".2f", cmap="coolwarm", ax=ax2)
-                ax2.set_title("Confidence Heatmap", color='#e0e0e0')
-                st.pyplot(fig2)
-                plt.close(fig2)
-                st.markdown("</div>", unsafe_allow_html=True)
-
-            time.sleep(0.5)
-
-        st.success("Target difficulty stabilized ✔")
+st.markdown("</div>", unsafe_allow_html=True)
 
 # ================= FOOTER =================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
