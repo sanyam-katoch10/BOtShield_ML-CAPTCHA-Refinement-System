@@ -20,12 +20,15 @@ st.markdown("""
 /* ---------- BACKGROUND ---------- */
 .stApp {
     position: relative;
-    background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #121212, #1b1b1b);
+    z-index: 0;  /* ensure content is above the background */
+    background: linear-gradient(135deg, #111111, #1f1f1f, #222222, #2a2a2a); /* lighter, stylish dark gradient */
     background-size: 400% 400%;
     animation: bgShift 30s ease infinite;
     color: #eaeaea;
     font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
 }
+
 @keyframes bgShift {
     0% {background-position: 0% 50%;}
     50% {background-position: 100% 50%;}
@@ -43,14 +46,17 @@ st.markdown("""
     background: radial-gradient(#888 1px, transparent 1px);
     background-size: 30px 30px;
     animation: moveDots 60s linear infinite;
-    opacity: 0.1;
+    opacity: 0.03;   /* very subtle */
     pointer-events: none;
+    z-index: -1;      /* behind everything */
 }
+
 @keyframes moveDots {
     0% {transform: translate(0,0);}
     50% {transform: translate(50px,50px);}
     100% {transform: translate(0,0);}
 }
+
 
 /* ---------- TOP BAR ---------- */
 .topbar {
@@ -251,3 +257,4 @@ elif page == "🔁 Refinement Engine":
 
 # ===================== FOOTER =====================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
+
