@@ -163,12 +163,11 @@ elif page == "🔁 Refinement Engine":
         confs = []
         grid = 4
         mat_current = np.zeros((grid, grid))
-        steps_per_update = 5
+        steps_per_update = 20  # higher for smoother animation
         norm = mcolors.Normalize(vmin=0, vmax=1)
-        cmap = plt.cm.plasma  # Original professional colors
-
+        cmap = plt.cm.plasma
+    
         for step in range(6):
-            # Generate target matrix
             mat_target = np.zeros((grid, grid))
             for i in range(grid):
                 for j in range(grid):
@@ -176,13 +175,13 @@ elif page == "🔁 Refinement Engine":
                     live_slot.image(img, use_column_width=True)
                     _, c = predict(img)
                     mat_target[i, j] = c
-
+    
             confs.append(mat_target.mean())
-
-            # Smooth interpolation
+    
+            # Smooth interpolation frame by frame
             for t in range(1, steps_per_update + 1):
                 mat_interpolated = mat_current + (mat_target - mat_current) * (t / steps_per_update)
-
+    
                 # Convergence line
                 fig1, ax1 = plt.subplots()
                 ax1.plot(confs, marker='o', color='#00ffff')
@@ -191,30 +190,27 @@ elif page == "🔁 Refinement Engine":
                 ax1.grid(True, alpha=0.3)
                 conv_slot.pyplot(fig1, clear_figure=True)
                 plt.close(fig1)
-
-                # Animated heatmap with dark ticks, labels, frame
+    
+                # Animated heatmap
                 fig2, ax2 = plt.subplots()
                 im = ax2.imshow(mat_interpolated, cmap=cmap, norm=norm)
-
-                # Dark text inside cells
                 for i in range(grid):
                     for j in range(grid):
                         ax2.text(j, i, f"{mat_interpolated[i,j]:.2f}", ha='center', va='center',
                                  color='black', fontsize=10, fontweight='bold')
-
-                # Dark axes, ticks, and frame
                 ax2.tick_params(colors='black', which='both', labelsize=10)
                 for spine in ax2.spines.values():
                     spine.set_color('black')
-
                 ax2.set_title("Heatmap", color="#00ffff")
                 heat_slot.pyplot(fig2, clear_figure=True)
                 plt.close(fig2)
-                time.sleep(0.1)
-
+                time.sleep(0.05)  # faster refresh for smoother motion
+    
             mat_current = mat_target.copy()
 
-        st.success("Target difficulty stabilized ✔")
+    st.success("Target difficulty stabilized ✔")
+
 
 # ===================== FOOTER =====================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
+
