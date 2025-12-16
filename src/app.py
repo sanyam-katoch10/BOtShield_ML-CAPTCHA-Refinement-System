@@ -18,78 +18,91 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* ---------- BACKGROUND ---------- */
+/* ===== ANIMATED DARK BACKGROUND ===== */
 .stApp {
-    background: linear-gradient(120deg, #0a0a0a, #1b1b1b, #0f0f0f);
-    background-size: 300% 300%;
-    animation: bgShift 25s ease infinite;
-    color: #eaeaea;
+    background: linear-gradient(
+        120deg,
+        #0b0b0e,
+        #141418,
+        #1b1c22,
+        #0f1014
+    );
+    background-size: 400% 400%;
+    animation: darkFlow 30s ease infinite;
+    color: #e6e6e6;
 }
 
-@keyframes bgShift {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
+@keyframes darkFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* ---------- TOP BAR ---------- */
+/* ===== TOP BAR ===== */
 .topbar {
-    background: linear-gradient(135deg,#2a2a2a,#3a3a3a);
+    background: linear-gradient(135deg,#1c1c22,#2b2b34);
     padding: 18px 30px;
     border-radius: 18px;
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.15),
-                0 10px 30px rgba(0,0,0,0.8);
-    margin-bottom: 20px;
     font-size: 26px;
     font-weight: 800;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.8);
+    margin-bottom: 20px;
 }
 
-/* ---------- SIDEBAR ---------- */
+/* ===== SIDEBAR ===== */
 section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg,#101010,#1c1c1c);
+    background: linear-gradient(180deg,#0f1014,#181922);
     border-right: 1px solid rgba(255,255,255,0.08);
 }
 
-.sidebar-title {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 20px;
-}
-
-/* ---------- CARDS ---------- */
+/* ===== CARDS ===== */
 .card {
-    background: linear-gradient(145deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.08),
+        rgba(255,255,255,0.02)
+    );
     border-radius: 20px;
-    padding: 25px;
+    padding: 24px;
     border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: inset 0 0 12px rgba(255,255,255,0.04),
-                0 20px 45px rgba(0,0,0,0.7);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.75);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-/* ---------- BUTTONS ---------- */
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 65px rgba(0,0,0,0.9);
+}
+
+/* ===== BUTTONS ===== */
 .stButton button {
     border-radius: 16px;
-    border: none;
-    padding: 14px;
+    padding: 14px 20px;
     font-weight: 700;
     color: #fff;
-    background: linear-gradient(135deg,#3b3b3b,#9b9b9b,#3b3b3b);
-    box-shadow: inset 0 1px 1px rgba(255,255,255,0.4),
-                0 6px 18px rgba(0,0,0,0.7);
-    transition: all 0.3s ease;
+    background: linear-gradient(
+        135deg,
+        #3f3f46,
+        #8b8b94,
+        #3f3f46
+    );
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.35),
+                0 8px 22px rgba(0,0,0,0.75);
+    transition: all 0.35s ease;
 }
 
 .stButton button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(220,220,220,0.35),
-                0 10px 30px rgba(0,0,0,0.9);
+    transform: translateY(-3px);
+    box-shadow: 0 0 24px rgba(220,220,220,0.35),
+                0 14px 34px rgba(0,0,0,0.9);
 }
 
-/* ---------- FOOTER ---------- */
+/* ===== FOOTER ===== */
 .footer {
     text-align: center;
     margin-top: 40px;
-    color: #8d8d8d;
+    color: #8f8f9a;
+    font-size: 14px;
 }
 
 </style>
@@ -103,7 +116,7 @@ st.markdown(
 
 # ===================== SIDEBAR =====================
 with st.sidebar:
-    st.markdown("<div class='sidebar-title'>⚙️ Navigation</div>", unsafe_allow_html=True)
+    st.markdown("## ⚙️ Navigation")
     page = st.radio(
         "",
         ["📊 Dashboard", "🖼 CAPTCHA Generator", "🔁 Refinement Engine"]
@@ -113,26 +126,24 @@ with st.sidebar:
 if page == "📊 Dashboard":
     st.markdown("## 📊 System Overview")
 
-    col1, col2, col3 = st.columns(3)
+    c1, c2, c3 = st.columns(3)
 
-    with col1:
-        st.markdown("<div class='card'>### Avg Confidence<br><h2>0.76</h2></div>", unsafe_allow_html=True)
+    with c1:
+        st.markdown("<div class='card'><h3>Avg Confidence</h3><h2>0.76</h2></div>", unsafe_allow_html=True)
 
-    with col2:
-        st.markdown("<div class='card'>### Stability Status<br><h2>Stable</h2></div>", unsafe_allow_html=True)
+    with c2:
+        st.markdown("<div class='card'><h3>Stability</h3><h2>Stable</h2></div>", unsafe_allow_html=True)
 
-    with col3:
-        st.markdown("<div class='card'>### Active Model<br><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
-
-    st.markdown("<div class='card'>### 📈 Refinement Trend</div>", unsafe_allow_html=True)
+    with c3:
+        st.markdown("<div class='card'><h3>Active Model</h3><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
 
 # ===================== GENERATOR =====================
 elif page == "🖼 CAPTCHA Generator":
     st.markdown("## 🖼 CAPTCHA Generator")
 
-    col1, col2 = st.columns([1.2, 1.8])
+    left, right = st.columns([1.1, 1.9])
 
-    with col1:
+    with left:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         noise = st.slider("Noise", 0.0, 1.0, 0.25)
         distortion = st.slider("Distortion", 0.0, 1.0, 0.25)
@@ -140,17 +151,47 @@ elif page == "🖼 CAPTCHA Generator":
         gen_btn = st.button("🎲 Generate CAPTCHA")
         st.markdown("</div>", unsafe_allow_html=True)
 
-    with col2:
+    with right:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
+
+        img_slot = st.empty()
+        stats_slot = st.empty()
+        plot_c1, plot_c2 = st.columns(2)
+
         if gen_btn:
             img, text = generate_captcha(noise, distortion, clutter)
-            st.image(img, use_column_width=True)
             pred, conf = predict(img)
-            st.markdown(f"""
+
+            img_slot.image(img, use_column_width=True)
+            stats_slot.markdown(f"""
             **Text:** `{text}`  
             **Difficulty:** `{pred.upper()}`  
             **Confidence:** `{conf:.2f}`
             """)
+
+            # --- CONVERGENCE ---
+            confs = []
+            mat = np.zeros((4,4))
+
+            for i in range(4):
+                for j in range(4):
+                    _, c = predict(img)
+                    mat[i,j] = c
+                    confs.append(c)
+
+            fig1, ax1 = plt.subplots(figsize=(4,3))
+            ax1.plot(confs, marker='o')
+            ax1.set_ylim(0,1)
+            ax1.set_title("Confidence Convergence")
+            plot_c1.pyplot(fig1)
+            plt.close(fig1)
+
+            fig2, ax2 = plt.subplots(figsize=(4,3))
+            sns.heatmap(mat, annot=True, fmt=".2f", cmap="coolwarm", ax=ax2)
+            ax2.set_title("Confidence Heatmap")
+            plot_c2.pyplot(fig2)
+            plt.close(fig2)
+
         st.markdown("</div>", unsafe_allow_html=True)
 
 # ===================== REFINEMENT =====================
@@ -174,15 +215,14 @@ elif page == "🔁 Refinement Engine":
 
     if auto_btn:
         confs = []
-        grid = 4
 
         for step in range(6):
-            mat = np.zeros((grid, grid))
-            for i in range(grid):
-                for j in range(grid):
+            mat = np.zeros((4,4))
+            for i in range(4):
+                for j in range(4):
                     img, _, _ = refine(target)
                     _, c = predict(img)
-                    mat[i, j] = c
+                    mat[i,j] = c
 
             confs.append(mat.mean())
 
