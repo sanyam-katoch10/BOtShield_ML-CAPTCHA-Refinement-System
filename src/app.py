@@ -10,11 +10,16 @@ import time
 # ===================== CONFIG =====================
 st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔒", layout="wide")
 
+# ===================== SESSION STATE =====================
+if "conf_list" not in st.session_state:
+    st.session_state.conf_list = []
+
 # ===================== CSS =====================
 st.markdown("""
 <style>
 /* ---------- BACKGROUND ---------- */
 .stApp {
+    position: relative;
     background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #121212, #1b1b1b);
     background-size: 400% 400%;
     animation: bgShift 30s ease infinite;
@@ -25,6 +30,26 @@ st.markdown("""
     0% {background-position: 0% 50%;}
     50% {background-position: 100% 50%;}
     100% {background-position: 0% 50%;}
+}
+
+/* ---------- FLOWING DOTS ---------- */
+.stApp::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(#888 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: moveDots 60s linear infinite;
+    opacity: 0.1;
+    pointer-events: none;
+}
+@keyframes moveDots {
+    0% {transform: translate(0,0);}
+    50% {transform: translate(50px,50px);}
+    100% {transform: translate(0,0);}
 }
 
 /* ---------- TOP BAR ---------- */
@@ -47,14 +72,12 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid rgba(255,255,255,0.08);
     box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
 }
-.sidebar-title {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 20px;
-}
+.sidebar-title { font-size: 22px; font-weight: 800; margin-bottom: 20px; }
 
-/* ---------- CARDS WITH NEON GLOW ---------- */
+/* ---------- CARDS WITH NEON GLOW + SHIMMER ---------- */
 .card {
+    position: relative;
+    overflow: hidden;
     background: rgba(40,40,40,0.45);
     backdrop-filter: blur(15px);
     border-radius: 20px;
@@ -66,6 +89,22 @@ section[data-testid="stSidebar"] {
 .card:hover {
     transform: translateY(-3px);
     box-shadow: 0 0 35px rgba(0,255,255,0.7), 0 0 50px rgba(0,255,255,0.5), 0 10px 40px rgba(0,0,0,0.8);
+}
+.card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-20deg);
+    animation: shimmer 3s infinite;
+    border-radius: 20px;
+}
+@keyframes shimmer {
+    0% { left: -75%; }
+    100% { left: 125%; }
 }
 
 /* ---------- BUTTONS WITH NEON GLOW ---------- */
@@ -85,11 +124,8 @@ section[data-testid="stSidebar"] {
 }
 
 /* ---------- FOOTER ---------- */
-.footer {
-    text-align: center;
-    margin-top: 40px;
-    color: #8d8d8d;
-}
+.footer { text-align: center; margin-top: 40px; color: #8d8d8d; }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,21 +138,22 @@ st.markdown(
 # ===================== SIDEBAR =====================
 with st.sidebar:
     st.markdown("<div class='sidebar-title'>⚙️ Navigation</div>", unsafe_allow_html=True)
-    page = st.radio(
-        "",
-        ["📊 Dashboard", "🖼 CAPTCHA Generator", "🔁 Refinement Engine"]
-    )
+    page = st.radio("", ["📊 Dashboard", "🖼 CAPTCHA Generator", "🔁 Refinement Engine"])
 
 # ===================== DASHBOARD =====================
 if page == "📊 Dashboard":
     st.markdown("## 📊 System Overview")
     col1, col2, col3 = st.columns(3)
+
+    avg_conf = np.mean(st.session_state.conf_list) if st.session_state.conf_list else 0.0
+
     with col1:
-        st.markdown("<div class='card'>### Avg Confidence<br><h2>0.76</h2></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='card'>### Avg Confidence<br><h2>{avg_conf:.2f}</h2></div>", unsafe_allow_html=True)
     with col2:
         st.markdown("<div class='card'>### Stability Status<br><h2>Stable</h2></div>", unsafe_allow_html=True)
     with col3:
         st.markdown("<div class='card'>### Active Model<br><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
+
     st.markdown("<div class='card'>### 📈 Refinement Trend</div>", unsafe_allow_html=True)
 
 # ===================== CAPTCHA GENERATOR =====================
@@ -137,6 +174,7 @@ elif page == "🖼 CAPTCHA Generator":
             img, text = generate_captcha(noise, distortion, clutter)
             preview_slot.image(img, use_column_width=True)
             pred, conf = predict(img)
+            st.session_state.conf_list.append(conf)
             st.markdown(f"**Text:** `{text}`  |  **Difficulty:** `{pred.upper()}`  |  **Confidence:** `{conf:.2f}`")
         st.markdown("</div>", unsafe_allow_html=True)
 
@@ -147,14 +185,16 @@ elif page == "🔁 Refinement Engine":
     refine_btn = st.button("✨ Refine Once")
     auto_btn = st.button("🚀 Auto-Refine")
 
-    live_slot = st.empty()       # live CAPTCHA preview
-    col1, col2 = st.columns([1,1])  # side-by-side plots
-    conv_slot = col1.empty()     # convergence line
-    heat_slot = col2.empty()     # animated heatmap
+    live_slot = st.empty()
+    col1, col2 = st.columns([1,1])
+    conv_slot = col1.empty()
+    heat_slot = col2.empty()
 
     if refine_btn:
         img, text, lvl = refine(target)
         live_slot.image(img, use_column_width=True)
+        _, c = predict(img)
+        st.session_state.conf_list.append(c)
         buf = BytesIO()
         img.save(buf, format="PNG")
         st.download_button("⬇ Download CAPTCHA", buf.getvalue(), f"{text}_{lvl}.png")
@@ -163,10 +203,10 @@ elif page == "🔁 Refinement Engine":
         confs = []
         grid = 4
         mat_current = np.zeros((grid, grid))
-        steps_per_update = 20  # higher for smoother animation
+        steps_per_update = 5
         norm = mcolors.Normalize(vmin=0, vmax=1)
         cmap = plt.cm.plasma
-    
+
         for step in range(6):
             mat_target = np.zeros((grid, grid))
             for i in range(grid):
@@ -174,14 +214,14 @@ elif page == "🔁 Refinement Engine":
                     img, _, _ = refine(target)
                     live_slot.image(img, use_column_width=True)
                     _, c = predict(img)
+                    st.session_state.conf_list.append(c)
                     mat_target[i, j] = c
-    
+
             confs.append(mat_target.mean())
-    
-            # Smooth interpolation frame by frame
-            for t in range(1, steps_per_update + 1):
-                mat_interpolated = mat_current + (mat_target - mat_current) * (t / steps_per_update)
-    
+
+            for t in range(1, steps_per_update+1):
+                mat_interpolated = mat_current + (mat_target - mat_current) * (t/steps_per_update)
+
                 # Convergence line
                 fig1, ax1 = plt.subplots()
                 ax1.plot(confs, marker='o', color='#00ffff')
@@ -190,8 +230,8 @@ elif page == "🔁 Refinement Engine":
                 ax1.grid(True, alpha=0.3)
                 conv_slot.pyplot(fig1, clear_figure=True)
                 plt.close(fig1)
-    
-                # Animated heatmap
+
+                # Heatmap
                 fig2, ax2 = plt.subplots()
                 im = ax2.imshow(mat_interpolated, cmap=cmap, norm=norm)
                 for i in range(grid):
@@ -204,14 +244,10 @@ elif page == "🔁 Refinement Engine":
                 ax2.set_title("Heatmap", color="#00ffff")
                 heat_slot.pyplot(fig2, clear_figure=True)
                 plt.close(fig2)
-                time.sleep(0.05)  # faster refresh for smoother motion
-    
+                time.sleep(0.1)
+
             mat_current = mat_target.copy()
-
         st.success("Target difficulty stabilized ✔")
-
 
 # ===================== FOOTER =====================
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True)
-
-
