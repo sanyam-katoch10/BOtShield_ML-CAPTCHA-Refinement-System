@@ -27,17 +27,32 @@ st.markdown("""
     100% {background-position:0% 50%;}
 }
 
-.bubble {
+.bubble, .particle {
     position: absolute;
     border-radius: 50%;
+    pointer-events: none;
+}
+
+.bubble {
     opacity: 0.15;
     animation: floatBubble linear infinite;
-    pointer-events: none;
 }
 @keyframes floatBubble {
     0% {transform: translateY(100vh) translateX(0) scale(0.5);}
     50% {transform: translateY(50vh) translateX(20vw) scale(1);}
     100% {transform: translateY(-10vh) translateX(-10vw) scale(0.3);}
+}
+
+.particle {
+    width: 4px;
+    height: 4px;
+    opacity: 0.1;
+    background: radial-gradient(circle, #00ffff, #ff00ff, transparent);
+    animation: driftParticle linear infinite;
+}
+@keyframes driftParticle {
+    0% {transform: translate(0,0);}
+    100% {transform: translate(200px,-150px);}
 }
 
 .topbar {
@@ -218,3 +233,6 @@ st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_a
 
 for i in range(20):
     st.markdown(f"<div class='bubble' style='width:{20+i*5}px; height:{20+i*5}px; top:{np.random.randint(0,90)}%; left:{np.random.randint(0,90)}%; background: radial-gradient(circle, #00ffff, #ff00ff, transparent); animation-duration:{5+np.random.randint(0,10)}s; animation-delay:{np.random.randint(0,5)}s;'></div>", unsafe_allow_html=True)
+
+for i in range(50):
+    st.markdown(f"<div class='particle' style='top:{np.random.randint(0,100)}%; left:{np.random.randint(0,100)}%; animation-duration:{5+np.random.randint(0,10)}s; animation-delay:{np.random.randint(0,5)}s;'></div>", unsafe_allow_html=True)
