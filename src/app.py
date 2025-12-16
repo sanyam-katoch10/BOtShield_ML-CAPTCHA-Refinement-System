@@ -42,23 +42,6 @@ st.markdown("""
     font-size: 28px;
     font-weight: 800;
     color: #f0f0f0;
-    position: relative;
-}
-
-/* ---------- LIVE AVG CONFIDENCE CARD ---------- */
-.live-conf {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    background: rgba(0,255,255,0.15);
-    backdrop-filter: blur(12px);
-    border-radius: 15px;
-    padding: 10px 20px;
-    border: 2px solid #00ffff;
-    box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff, 0 5px 15px rgba(0,255,255,0.3);
-    font-size: 18px;
-    font-weight: 700;
-    color: #00ffff;
 }
 
 /* ---------- SIDEBAR ---------- */
@@ -115,9 +98,8 @@ section[data-testid="stSidebar"] {
 """, unsafe_allow_html=True)
 
 # ===================== TOP BAR =====================
-avg_conf = np.mean(st.session_state.conf_list) if st.session_state.conf_list else 0.0
 st.markdown(
-    f"<div class='topbar'>🔒 ML CAPTCHA Refinement <span class='live-conf'>Avg Conf: {avg_conf:.2f}</span> <span style='float:right;font-size:16px;'>🟢 Model Online</span></div>",
+    "<div class='topbar'>🔒 ML CAPTCHA Refinement <span style='float:right;font-size:16px;'>🟢 Model Online</span></div>",
     unsafe_allow_html=True
 )
 
@@ -132,8 +114,8 @@ with st.sidebar:
 # ===================== DASHBOARD =====================
 if page == "📊 Dashboard":
     st.markdown("## 📊 System Overview")
-    col1, col2, col3 = st.columns(3)
     avg_conf = np.mean(st.session_state.conf_list) if st.session_state.conf_list else 0.0
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown(f"<div class='card'>### Avg Confidence<br><h2>{avg_conf:.2f}</h2></div>", unsafe_allow_html=True)
     with col2:
@@ -155,11 +137,15 @@ elif page == "🖼 CAPTCHA Generator":
     with col2:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         preview_slot = st.empty()
+        avg_conf_slot = st.empty()  # Live avg confidence display
         if gen_btn:
             img, text = generate_captcha(noise, distortion, clutter)
             preview_slot.image(img, use_column_width=True)
             pred, conf = predict(img)
             st.session_state.conf_list.append(conf)
+            avg_conf = np.mean(st.session_state.conf_list)
+            avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
+            st.markdown(f"**Text:** `{text}`  |  **Difficulty:** `{pred.upper()}`  |  **Confidence:** `{conf:.2f}`")
         st.markdown("</div>", unsafe_allow_html=True)
 
 # ===================== REFINEMENT ENGINE =====================
@@ -169,22 +155,22 @@ elif page == "🔁 Refinement Engine":
     refine_btn = st.button("✨ Refine Once")
     auto_btn = st.button("🚀 Auto-Refine")
 
-    live_slot = st.empty()
-    col1, col2 = st.columns([1,1])
-    conv_slot = col1.empty()
-    heat_slot = col2.empty()
+    live_slot = st.empty()       # live CAPTCHA preview
+    avg_conf_slot = st.empty()   # live avg confidence
+    col1, col2 = st.columns([1,1])  # side-by-side plots
+    conv_slot = col1.empty()     # convergence line
+    heat_slot = col2.empty()     # animated heatmap
 
     if refine_btn:
         img, text, lvl = refine(target)
         live_slot.image(img, use_column_width=True)
         _, c = predict(img)
         st.session_state.conf_list.append(c)
-        # Update neon avg card dynamically
         avg_conf = np.mean(st.session_state.conf_list)
-        st.markdown(
-            f"<div class='topbar'><span class='live-conf'>Avg Conf: {avg_conf:.2f}</span></div>",
-            unsafe_allow_html=True
-        )
+        avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
+        buf = BytesIO()
+        img.save(buf, format="PNG")
+        st.download_button("⬇ Download CAPTCHA", buf.getvalue(), f"{text}_{lvl}.png")
 
     if auto_btn:
         confs = []
@@ -203,11 +189,7 @@ elif page == "🔁 Refinement Engine":
                     _, c = predict(img)
                     st.session_state.conf_list.append(c)
                     avg_conf = np.mean(st.session_state.conf_list)
-                    # Update neon avg card dynamically
-                    st.markdown(
-                        f"<div class='topbar'><span class='live-conf'>Avg Conf: {avg_conf:.2f}</span></div>",
-                        unsafe_allow_html=True
-                    )
+                    avg_conf_slot.markdown(f"**Live Avg Confidence:** {avg_conf:.2f}")
                     mat_target[i, j] = c
 
             confs.append(mat_target.mean())
