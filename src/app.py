@@ -3,6 +3,7 @@ from io import BytesIO
 from generator import generate_captcha
 from refine_m import refine, predict
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 import numpy as np
 import time
 
@@ -51,22 +52,22 @@ section[data-testid="stSidebar"] {
     margin-bottom: 20px;
 }
 
-/* ---------- CARDS ---------- */
+/* ---------- CARDS WITH NEON GLOW ---------- */
 .card {
     background: rgba(40,40,40,0.45);
     backdrop-filter: blur(15px);
     border-radius: 20px;
     padding: 25px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: inset 0 0 12px rgba(255,255,255,0.05), 0 15px 35px rgba(0,0,0,0.6);
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 15px rgba(0,255,255,0.3), 0 0 25px rgba(0,255,255,0.2), 0 10px 35px rgba(0,0,0,0.7);
     transition: all 0.3s ease;
 }
 .card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 0 30px rgba(0,255,255,0.4), 0 20px 40px rgba(0,0,0,0.8);
+    box-shadow: 0 0 35px rgba(0,255,255,0.7), 0 0 50px rgba(0,255,255,0.5), 0 10px 40px rgba(0,0,0,0.8);
 }
 
-/* ---------- BUTTONS ---------- */
+/* ---------- BUTTONS WITH NEON GLOW ---------- */
 .stButton button {
     border-radius: 16px;
     border: none;
@@ -161,7 +162,8 @@ elif page == "🔁 Refinement Engine":
         confs = []
         grid = 4
         mat = np.zeros((grid, grid))
-        cmap = plt.get_cmap("coolwarm")
+        norm = mcolors.Normalize(vmin=0, vmax=1)
+        cmap = plt.cm.plasma  # professional heatmap colors
 
         for step in range(6):
             for i in range(grid):
@@ -177,18 +179,19 @@ elif page == "🔁 Refinement Engine":
             fig1, ax1 = plt.subplots()
             ax1.plot(confs, marker='o', color='#00ffff')
             ax1.set_ylim(0,1)
-            ax1.set_title("Convergence Line")
+            ax1.set_title("Convergence Line", color="#00ffff")
             ax1.grid(True, alpha=0.3)
             conv_slot.pyplot(fig1, clear_figure=True)
             plt.close(fig1)
 
-            # Animated heatmap
+            # Animated professional heatmap
             fig2, ax2 = plt.subplots()
-            im = ax2.imshow(mat, cmap=cmap, vmin=0, vmax=1)
+            im = ax2.imshow(mat, cmap=cmap, norm=norm)
             for i in range(grid):
                 for j in range(grid):
-                    ax2.text(j, i, f"{mat[i,j]:.2f}", ha='center', va='center', color='white')
-            ax2.set_title("Heatmap")
+                    ax2.text(j, i, f"{mat[i,j]:.2f}", ha='center', va='center', color='white', fontsize=10)
+            ax2.set_title("Heatmap", color="#00ffff")
+            ax2.tick_params(colors="#e0e0e0")
             heat_slot.pyplot(fig2, clear_figure=True)
             plt.close(fig2)
 
