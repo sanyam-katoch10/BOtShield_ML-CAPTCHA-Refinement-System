@@ -9,7 +9,7 @@ import time
 
 st.set_page_config(page_title="ML CAPTCHA Refinement", page_icon="🔒", layout="wide")
 
-# ===================== CSS + JS for particles + UI =====================
+
 st.markdown("""
 <style>
 .stApp {
@@ -193,17 +193,14 @@ animate();
 </script>
 """, unsafe_allow_html=True)
 
-# ===================== TOP BAR =====================
-st.markdown("<div class='topbar'>🔒 ML CAPTCHA Refinement <span style='float:right;font-size:16px;'>🟢 Model Online</span></div>", unsafe_allow_html=True)
+st.markdown("<div class='topbar'>BOtShield (ML CAPTCHA Refinement System)<span style='float:right;font-size:16px;'>🟢 Model Online</span></div>", unsafe_allow_html=True)
 
-# ===================== SIDEBAR =====================
 with st.sidebar:
     st.markdown("<div class='sidebar-title'>⚙️ Navigation</div>", unsafe_allow_html=True)
     page = st.radio("", ["📊 Dashboard", "🖼 CAPTCHA Generator", "🔁 Refinement Engine"])
 
-# ===================== DASHBOARD =====================
-if page == "📊 Dashboard":
-    st.markdown("## 📊 System Overview")
+if page == " Dashboard":
+    st.markdown("##  System Overview")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("<div class='card'> Avg Confidence<br><h2>0.97</h2></div>", unsafe_allow_html=True)
@@ -212,16 +209,15 @@ if page == "📊 Dashboard":
     with col3:
         st.markdown("<div class='card'> Active Model<br><h2>CNN v1.0</h2></div>", unsafe_allow_html=True)
 
-# ===================== CAPTCHA GENERATOR =====================
-elif page == "🖼 CAPTCHA Generator":
-    st.markdown("## 🖼 CAPTCHA Generator")
+elif page == " CAPTCHA Generator":
+    st.markdown("##  CAPTCHA Generator")
     col1, col2 = st.columns([1.2, 1.8])
     with col1:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         noise = st.slider("Noise", 0.0, 1.0, 0.25)
         distortion = st.slider("Distortion", 0.0, 1.0, 0.25)
         clutter = st.slider("Clutter", 0.0, 1.0, 0.25)
-        gen_btn = st.button("🎲 Generate CAPTCHA")
+        gen_btn = st.button(" Generate CAPTCHA")
         st.markdown("</div>", unsafe_allow_html=True)
     with col2:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
@@ -233,12 +229,11 @@ elif page == "🖼 CAPTCHA Generator":
             st.markdown(f"**Text:** `{text}`  |  **Difficulty:** `{pred.upper()}`  |  **Confidence:** `{conf:.2f}`")
         st.markdown("</div>", unsafe_allow_html=True)
 
-# ===================== REFINEMENT ENGINE =====================
-elif page == "🔁 Refinement Engine":
-    st.markdown("## 🔁 Refinement Engine")
+elif page == " Refinement Engine":
+    st.markdown("##  Refinement Engine")
     target = st.selectbox("Target Difficulty", ["easy", "medium", "hard"])
-    refine_btn = st.button("✨ Refine Once")
-    auto_btn = st.button("🚀 Auto-Refine")
+    refine_btn = st.button(" Refine Once")
+    auto_btn = st.button(" Auto-Refine")
 
     live_slot = st.empty()
     col1, col2 = st.columns([1,1])
@@ -295,4 +290,5 @@ elif page == "🔁 Refinement Engine":
         st.success("Target difficulty stabilized ✔")
 
 st.markdown("<div class='footer'>✨ Built by SANYAM KATOCH ✨</div>", unsafe_allow_html=True) 
+
 
