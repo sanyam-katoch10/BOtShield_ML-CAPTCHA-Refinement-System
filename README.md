@@ -34,9 +34,10 @@
 
 <p align="center">
   <a href="https://botshield0captcha-sam.streamlit.app/" target="_blank">
-    <img src="https://img.shields.io/badge/✨_Launch_Streamlit_App_🚀-FF2D55?style=for-the-badge&logo=streamlit&logoColor=white" />
+    <img src="https://img.shields.io/badge/🚀_Launch_Live_App-FF416C?style=for-the-badge&logo=streamlit&logoColor=white" />
   </a>
 </p>
+
 
 
 
