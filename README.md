@@ -33,23 +33,22 @@
 ## 🌐 Live Demo
 
 <p align="center">
-  <a href="https://botshield0captcha-sam.streamlit.app/" target="_blank" style="text-decoration:none;">
-    <span style="
-      display:inline-block;
-      padding:14px 26px;
-      font-size:16px;
-      font-weight:700;
-      color:#ffffff;
-      background:linear-gradient(135deg,#ff416c,#ff4b2b);
-      border-radius:14px;
-      box-shadow:0 0 18px rgba(255,75,75,0.55);
-      backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    ">
-      🚀 Launch Live Streamlit App
-    </span>
+  <a href="https://botshield0captcha-sam.streamlit.app/" target="_blank">
+    <svg width="360" height="60" viewBox="0 0 360 60" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ff416c"/>
+          <stop offset="100%" stop-color="#ff4b2b"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="360" height="60" rx="14" fill="url(#grad)"/>
+      <text x="180" y="38" text-anchor="middle" font-size="18" fill="white" font-weight="bold">
+        🚀 Launch Live Streamlit App
+      </text>
+    </svg>
   </a>
 </p>
+
 
 ---
 
