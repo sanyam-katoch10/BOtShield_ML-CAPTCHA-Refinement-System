@@ -1,8 +1,6 @@
 
 
-<p align="center">
-  <img src="assets/demo.gif" width="70%" alt="ML CAPTCHA Refinement Demo"/>
-</p>
+
 
 
 <div align="center">
