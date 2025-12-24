@@ -59,7 +59,7 @@ It is designed to balance **human accessibility** with **maximum bot resistance*
 
 <p align="center">
   <img src="https://img.shields.io/badge/Dataset_Size-6000_images-blueviolet?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Model_Accuracy-95%25-brightgreen?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Model_Accuracy-97%25-brightgreen?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Model_Size-75_MB-orange?style=for-the-badge"/>
 </p>
 
@@ -86,7 +86,7 @@ It is designed to balance **human accessibility** with **maximum bot resistance*
 ### 🤖 CNN Difficulty Classifier
 
 * 6000 labeled images (easy/medium/hard)
-* 95% validation accuracy
+* 97% validation accuracy
 * Lightweight CNN (TensorFlow + Keras)
 
 ### 🔄 Adaptive Refinement Loop
