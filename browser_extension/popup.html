@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BotShield</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">🔒</div>
+            <div>
+                <div class="brand">BotShield</div>
+                <div class="tagline">CAPTCHA Analyzer</div>
+            </div>
+        </div>
+        <div class="status" id="status">
+            <span class="status-dot"></span>
+            <span id="status-text">Connecting…</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" data-tab="generator">⚡ Generate</button>
+        <button class="tab" data-tab="analyzer">🔍 Analyze</button>
+    </div>
+
+    <!-- Generator Tab -->
+    <div class="tab-content active" id="tab-generator">
+        <div class="control-group">
+            <label for="difficulty">Target Difficulty</label>
+            <select id="difficulty">
+                <option value="easy">🟢 Easy</option>
+                <option value="medium" selected>🟡 Medium</option>
+                <option value="hard">🔴 Hard</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="generate-btn">
+            <span class="btn-text">⚡ Generate CAPTCHA</span>
+            <span class="btn-loader" style="display:none;">⏳ Generating…</span>
+        </button>
+        <div class="result-area" id="generate-result" style="display:none;">
+            <img id="captcha-img" alt="Generated CAPTCHA">
+            <div class="result-grid">
+                <div class="result-item">
+                    <span class="result-label">Text</span>
+                    <span class="result-value" id="captcha-text">—</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Difficulty</span>
+                    <span class="result-value" id="captcha-diff">—</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Confidence</span>
+                    <span class="result-value" id="captcha-conf">—</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analyzer Tab -->
+    <div class="tab-content" id="tab-analyzer">
+        <p class="info-text">Upload a CAPTCHA image to analyze its difficulty using ML.</p>
+        <div class="upload-area" id="upload-area">
+            <input type="file" id="file-input" accept="image/*" hidden>
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Click or drag an image here</div>
+        </div>
+        <div class="result-area" id="analyze-result" style="display:none;">
+            <img id="analyze-img" alt="Uploaded CAPTCHA">
+            <div class="result-grid result-grid-3">
+                <div class="result-item">
+                    <span class="result-label">Recognized Text</span>
+                    <span class="result-value" id="analyze-text">—</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Difficulty</span>
+                    <span class="result-value" id="analyze-diff">—</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Confidence</span>
+                    <span class="result-value" id="analyze-conf">—</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        Built by <a href="https://github.com/sanyam-katoch10" target="_blank">Sanyam Katoch</a>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
