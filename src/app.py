@@ -483,7 +483,7 @@ section[data-testid="stSidebar"] {{
 st.markdown("""
 <div class='header-bar'>
     <div>
-        <div class='header-title'>BotShield — ML CAPTCHA Refinement</div>
+        <div class='header-title'>BOtShielD — ML CAPTCHA Refinement System</div>
         <div class='header-subtitle'>CNN-powered adaptive difficulty system</div>
     </div>
     <div class='header-badge'>
@@ -501,11 +501,11 @@ with st.sidebar:
     st.markdown("""
     <div class='sidebar-brand'>
         <div class='sidebar-brand-icon'>🔒</div>
-        <div class='sidebar-brand-text'>BotShield</div>
+        <div class='sidebar-brand-text'>BOtShielD</div>
     </div>
     """, unsafe_allow_html=True)
     st.markdown("<div class='sidebar-section-label'>Navigation</div>", unsafe_allow_html=True)
-    page = st.radio("", ["📊 Dashboard", "🖼 CAPTCHA Generator", "🔁 Refinement Engine"])
+    page = st.radio("", [" Dashboard", " CAPTCHA Generator", " Refinement Engine"])
 
     st.markdown("---")
     st.markdown("<div class='sidebar-section-label'>Model Info</div>", unsafe_allow_html=True)
@@ -517,7 +517,7 @@ with st.sidebar:
 #  DASHBOARD
 # ══════════════════════════════════════════════════════════════════════════════
 
-if page == "📊 Dashboard":
+if page == " Dashboard":
     st.markdown("""
     <div class='section-title'>
         <div class='section-title-icon'>📊</div>
@@ -591,7 +591,7 @@ if page == "📊 Dashboard":
 #  CAPTCHA GENERATOR
 # ══════════════════════════════════════════════════════════════════════════════
 
-elif page == "🖼 CAPTCHA Generator":
+elif page == " CAPTCHA Generator":
     st.markdown("""
     <div class='section-title'>
         <div class='section-title-icon'>🖼</div>
@@ -624,7 +624,7 @@ elif page == "🖼 CAPTCHA Generator":
 #  REFINEMENT ENGINE
 # ══════════════════════════════════════════════════════════════════════════════
 
-elif page == "🔁 Refinement Engine":
+elif page == " Refinement Engine":
     st.markdown("""
     <div class='section-title'>
         <div class='section-title-icon'>🔁</div>
