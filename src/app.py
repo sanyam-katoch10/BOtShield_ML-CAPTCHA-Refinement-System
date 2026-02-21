@@ -726,5 +726,6 @@ elif page == " Refinement Engine":
 st.markdown("""
 <div class='footer'>
     Built by <a href='https://github.com/sanyam-katoch10' target='_blank'>Sanyam Katoch</a>
+    BOtShielD &copy; 2026
 </div>
 """, unsafe_allow_html=True)
