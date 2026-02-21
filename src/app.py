@@ -8,7 +8,7 @@ import numpy as np
 import time
 import random
 
-st.set_page_config(page_title="BotShield — ML CAPTCHA", page_icon="🔒", layout="wide")
+st.set_page_config(page_title="BOtShielD", page_icon="🔒", layout="wide")
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  GENERATE FLOATING PARTICLES (pure CSS, rendered as HTML divs)
