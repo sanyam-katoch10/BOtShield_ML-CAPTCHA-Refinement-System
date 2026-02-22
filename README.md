@@ -218,6 +218,9 @@ streamlit run src/app.py
   <p>
     <a href="https://www.linkedin.com/in/sanyam-katoch/" target="_blank">
       <img src="https://img.shields.io/badge/LinkedIn-Sanyam--Katoch-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+      <p align="center">
+  © BOtShielD 2026
+</p>
     </a>
   </p>
 </div>
