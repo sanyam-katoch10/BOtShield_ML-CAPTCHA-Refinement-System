@@ -5,11 +5,11 @@
 
 <h1 align="center">
   <span style="background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff6a88, #ff99ac); -webkit-background-clip: text; color: transparent;">
-    🤖 ML-Enhanced CAPTCHA Refinement System 🔐
+    🤖 BOtShielD 🔐
   </span>
 </h1>
 
-<h3 align="center">AI-powered Adaptive CAPTCHA Generator & Difficulty Optimization System</h3>
+<h3 align="center">ML Enhanced Adaptive CAPTCHA Generator & Difficulty Optimization System</h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
