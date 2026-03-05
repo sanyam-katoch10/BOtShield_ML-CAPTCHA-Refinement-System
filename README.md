@@ -24,7 +24,7 @@
 ## 🌐 Live Demo
 
 <p align="center">
-  <a href="https://botshield0captcha-sam.streamlit.app/" target="_blank">
+  <a href="https://bot0shield.streamlit.app/" target="_blank">
     <img
       src="https://img.shields.io/badge/🚀_Launch_Streamlit_App-FF2D55?style=for-the-badge&logo=streamlit&logoColor=white"
     />
